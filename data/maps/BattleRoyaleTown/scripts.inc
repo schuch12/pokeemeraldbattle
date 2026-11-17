@@ -8,7 +8,6 @@ BattleRoyaleTown_OnFrame:
 
 BattleRoyaleTown_EventScript_Welcome::
 	lockall
-	bufferleadmonspeciesname STR_VAR_1
 	playfanfare MUS_OBTAIN_ITEM
 	message BattleRoyaleTown_Text_Welcome
 	waitmessage
@@ -25,7 +24,7 @@ BattleRoyaleTown_EventScript_TowerSign::
 BattleRoyaleTown_Text_Welcome:
 	.string "Welcome to {JPN}バトル·ロワイアル{ENG},\n"
 	.string "{PLAYER}!\p"
-	.string "Your partner is {STR_VAR_1}!\n"
+	.string "You received three POKéMON!\n"
 	.string "Win TOWER battles to earn money.$"
 
 BattleRoyaleTown_Text_TowerSign:

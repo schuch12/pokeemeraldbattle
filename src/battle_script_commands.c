@@ -3379,6 +3379,15 @@ static void Cmd_getexp(void)
                     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                         gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
 
+                    // Battle Royale: soft level cap
+                    if (gBattleMoveDamage > 0
+                     && GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) >= BattleRoyale_GetLevelCap())
+                    {
+                        gBattleMoveDamage = (gBattleMoveDamage * BR_OVER_CAP_EXP_PERCENT) / 100;
+                        if (gBattleMoveDamage == 0)
+                            gBattleMoveDamage = 1;
+                    }
+
                     if (IsTradedMon(&gPlayerParty[gBattleStruct->expGetterMonId]))
                     {
                         // check if the Pokémon doesn't belong to the player

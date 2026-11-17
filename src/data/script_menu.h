@@ -795,6 +795,17 @@ static const struct MenuAction MultichoiceList_BRPokemonShop[] =
     {gText_Exit},
 };
 
+// Battle Royale: Tower tier menu
+static const u8 sText_BRTier1[] = _("TIER 1");
+static const u8 sText_BRTier2[] = _("TIER 2");
+
+static const struct MenuAction MultichoiceList_BRTiers[] =
+{
+    {sText_BRTier1},
+    {sText_BRTier2},
+    {gText_Exit},
+};
+
 struct MultichoiceListStruct
 {
     const struct MenuAction *list;
@@ -804,6 +815,7 @@ struct MultichoiceListStruct
 static const struct MultichoiceListStruct sMultichoiceLists[] =
 {
     [MULTI_BR_POKEMON_SHOP]            = MULTICHOICE(MultichoiceList_BRPokemonShop),
+    [MULTI_BR_TIERS]                   = MULTICHOICE(MultichoiceList_BRTiers),
     [MULTI_BRINEY_ON_DEWFORD]          = MULTICHOICE(MultichoiceList_BrineyOnDewford),
     [MULTI_PC]                         = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_ENTERINFO]                  = MULTICHOICE(MultichoiceList_EnterInfo),

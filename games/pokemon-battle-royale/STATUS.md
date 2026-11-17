@@ -1,15 +1,17 @@
 # Status
 
-- Phase: 3 (Battle Tower Tier 1) — DONE, waiting for Drew to test
-- Last working build: `builds/phase3.gba`
-- Next: Phase 4 — Tier 2, soft level cap, practice grass
-- Known issues: Drew reported his typed name was replaced by a preset (REID) in Phase 2; not reproducible here (the game only does that when the name box is left empty). Center/Mart bystanders still have Frontier dialogue — Drew may supply 6 lines (3 Center, 3 Mart).
+- Phase: 4 (Tier 2, soft level cap, practice grass) — DONE, waiting for Drew to test
+- Last working build: `builds/phase4.gba`
+- Next: Phase 5 — save and quit between Tower battles (resume continues the run); full run-through test
+- Known issues: none known. Not tested: blacking out in the grass.
 
 ## Decisions (approved by Drew)
 - Hub town name: バトル・ロワイアル. Title: Pokémon Battle Royale.
 - Starter pool (level 5, random): Treecko, Torchic, Mudkip, Ralts, Shroomish, Aron, Electrike, Machop, Abra, Taillow, Eevee.
 - Pokémon shop (level 5): Zigzagoon ₽1000, Wingull ₽1500, Makuhita ₽2000, Geodude ₽2000, Gastly ₽3000, Trapinch ₽3500.
 - Losing a tier run costs nothing extra for now (penalty maybe later).
+- New game gives 3 different random starters from the pool (Drew found 1 too few).
+- Center/Mart bystander lines are Drew's six quotes (npc_quotes.md).
 - Pokémon evolve normally. Plan: sell evolution stones in the Mart (Phase 2) so Eevee etc. can evolve.
 
 ## Technical notes
@@ -23,6 +25,8 @@
 - Tower: `src/battle_royale.c` holds the tier table (opponent identities, species pool, levels, prize money). Lobby and battle room are new maps `BattleRoyale_TowerLobby` / `BattleRoyale_TowerBattleRoom` reusing the vanilla Tower layouts.
 - Tower battles are normal trainer battles (EXP and items allowed) started by `BattleRoyale_StartTowerBattle` in `src/battle_setup.c`; the enemy team and prize money are overridden in `battle_main.c` / `battle_script_commands.c` while `gBattleRoyaleTowerBattle` is set. Losing never whites out.
 - Run state is in vars 0x40F7–0x40FA (previously unused), see `include/battle_royale.h`.
+- Soft level cap: `BattleRoyale_GetLevelCap` (cap of the first uncleared tier: 15, then 25); applied in `Cmd_getexp` in `battle_script_commands.c`, EXP cut to 10% at or above the cap.
+- Wild Pokémon for the hub grass are the `MAP_BATTLE_ROYALE_TOWN` entry in `src/data/wild_encounters.json` (lv 4–12). Blacking out no longer halves money (`DoWhiteOut`).
 - Save format unchanged from vanilla so far.
 
 ## Phase log
@@ -30,3 +34,4 @@
 - Phase 1: shortened intro (boy/girl + name only), hub town, random starter, National Dex and running shoes from the start. Tested in a headless emulator: new game, menus, save and continue.
 - Phase 2: Center heals, Mart sells balls/potions/status heals/berries/4 evolution stones, shop sells 6 Pokémon (party or PC). Tested in a headless emulator, including a full party and too little money.
 - Phase 3: Tier 1 (5 battles, random opponents and teams, lv 3–8). Wins pay ₽200/300/400/500/600, clear bonus ₽1500, loss pays ₽200. Tested: full clear, forced loss.
+- Phase 4: Tier 2 (lv 14–23, evolved Pokémon, teams of 2–4; wins ₽600/800/1000/1200/1500, bonus ₽4000, loss ₽500), tier menu with Tier 2 locked until Tier 1 is cleared, level cap, practice grass, 3 starters, Drew's NPC quotes. Tested with a boosted team: Tier 1 clear → Tier 2 clear, money and progress correct; level stalls at 15 in the grass.

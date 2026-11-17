@@ -41,6 +41,7 @@ struct BRTier
     u16 winMoney[BR_BATTLES_PER_TIER];
     u16 clearBonus;
     u16 consolation;
+    u8 levelCap; // soft cap: EXP is cut sharply at this level and above
 };
 
 EWRAM_DATA bool8 gBattleRoyaleTowerBattle = FALSE;
@@ -83,6 +84,60 @@ static const u16 sTier1Species[] =
     SPECIES_GULPIN,
 };
 
+static const struct BRTrainer sTier2Trainers[] =
+{
+    {TRAINER_SAWYER_1,   OBJ_EVENT_GFX_HIKER},
+    {TRAINER_ELI,        OBJ_EVENT_GFX_HIKER},
+    {TRAINER_DREW,       OBJ_EVENT_GFX_CAMPER},
+    {TRAINER_BEAU,       OBJ_EVENT_GFX_CAMPER},
+    {TRAINER_AUTUMN,     OBJ_EVENT_GFX_PICNICKER},
+    {TRAINER_HEIDI,      OBJ_EVENT_GFX_PICNICKER},
+    {TRAINER_EDWARD,     OBJ_EVENT_GFX_PSYCHIC_M},
+    {TRAINER_ZANDER,     OBJ_EVENT_GFX_BLACK_BELT},
+    {TRAINER_TAKAO,      OBJ_EVENT_GFX_BLACK_BELT},
+    {TRAINER_MELISSA,    OBJ_EVENT_GFX_BEAUTY},
+    {TRAINER_WALTER_1,   OBJ_EVENT_GFX_GENTLEMAN},
+    {TRAINER_HUEY,       OBJ_EVENT_GFX_SAILOR},
+    {TRAINER_MIGUEL_1,   OBJ_EVENT_GFX_POKEFAN_M},
+    {TRAINER_VANESSA,    OBJ_EVENT_GFX_POKEFAN_F},
+    {TRAINER_STEVE_1,    OBJ_EVENT_GFX_MANIAC},
+    {TRAINER_YASU,       OBJ_EVENT_GFX_NINJA_BOY},
+};
+
+static const u16 sTier2Species[] =
+{
+    SPECIES_MIGHTYENA,
+    SPECIES_LINOONE,
+    SPECIES_BEAUTIFLY,
+    SPECIES_DUSTOX,
+    SPECIES_LOMBRE,
+    SPECIES_NUZLEAF,
+    SPECIES_SWELLOW,
+    SPECIES_PELIPPER,
+    SPECIES_KIRLIA,
+    SPECIES_MASQUERAIN,
+    SPECIES_BRELOOM,
+    SPECIES_LOUDRED,
+    SPECIES_VIGOROTH,
+    SPECIES_GOLBAT,
+    SPECIES_MAKUHITA,
+    SPECIES_NOSEPASS,
+    SPECIES_ARON,
+    SPECIES_MEDITITE,
+    SPECIES_ELECTRIKE,
+    SPECIES_ROSELIA,
+    SPECIES_CARVANHA,
+    SPECIES_NUMEL,
+    SPECIES_GEODUDE,
+    SPECIES_MAGNEMITE,
+    SPECIES_MACHOP,
+    SPECIES_SABLEYE,
+    SPECIES_MAWILE,
+    SPECIES_SPOINK,
+    SPECIES_CORPHISH,
+    SPECIES_GRAVELER,
+};
+
 static const struct BRTier sTiers[BR_NUM_TIERS] =
 {
     // Tier 1: an easy introduction
@@ -98,6 +153,22 @@ static const struct BRTier sTiers[BR_NUM_TIERS] =
         .winMoney = {200, 300, 400, 500, 600},
         .clearBonus = 1500,
         .consolation = 200,
+        .levelCap = 15,
+    },
+    // Tier 2: noticeably harder. Evolved Pokemon, bigger teams, better stats.
+    {
+        .trainers = sTier2Trainers,
+        .numTrainers = ARRAY_COUNT(sTier2Trainers),
+        .species = sTier2Species,
+        .numSpecies = ARRAY_COUNT(sTier2Species),
+        .fixedIV = 12,
+        .monCount = {2, 3, 3, 3, 4},
+        .minLevel = {14, 15, 17, 18, 20},
+        .maxLevel = {16, 17, 19, 21, 23},
+        .winMoney = {600, 800, 1000, 1200, 1500},
+        .clearBonus = 4000,
+        .consolation = 500,
+        .levelCap = 25,
     },
 };
 
@@ -157,6 +228,17 @@ static void EndRun(void)
     VarSet(VAR_BR_TIER, 0);
     VarSet(VAR_BR_BATTLE_NUM, 0);
     VarSet(VAR_BR_USED_TRAINERS, 0);
+}
+
+// The soft level cap follows progress: it is the cap of the first tier the
+// player has not cleared yet (or of the last tier once all are cleared).
+u8 BattleRoyale_GetLevelCap(void)
+{
+    u16 cleared = VarGet(VAR_BR_TIERS_CLEARED);
+
+    if (cleared >= BR_NUM_TIERS)
+        cleared = BR_NUM_TIERS - 1;
+    return sTiers[cleared].levelCap;
 }
 
 // special: starts a run of the tier in VAR_0x8004

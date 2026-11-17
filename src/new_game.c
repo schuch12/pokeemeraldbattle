@@ -150,12 +150,29 @@ static const u16 sStarterPool[] =
     SPECIES_EEVEE,
 };
 
+#define NUM_STARTERS 3
 #define STARTER_LEVEL 5
 #define STARTING_MONEY 3000
 
 static void GiveBattleRoyaleStartingKit(void)
 {
-    ScriptGiveMon(sStarterPool[Random() % ARRAY_COUNT(sStarterPool)], STARTER_LEVEL, ITEM_NONE, 0, 0, 0);
+    u16 chosen[NUM_STARTERS];
+    u32 i, j;
+
+    // pick NUM_STARTERS different Pokemon from the pool
+    for (i = 0; i < NUM_STARTERS; i++)
+    {
+        do
+        {
+            chosen[i] = sStarterPool[Random() % ARRAY_COUNT(sStarterPool)];
+            for (j = 0; j < i; j++)
+            {
+                if (chosen[j] == chosen[i])
+                    break;
+            }
+        } while (j != i);
+        ScriptGiveMon(chosen[i], STARTER_LEVEL, ITEM_NONE, 0, 0, 0);
+    }
     FlagSet(FLAG_SYS_POKEMON_GET);
     FlagSet(FLAG_SYS_POKEDEX_GET);
     FlagSet(FLAG_SYS_B_DASH);

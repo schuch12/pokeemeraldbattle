@@ -3,6 +3,7 @@
 #include "random.h"
 #include "script_pokemon_util.h"
 #include "constants/species.h"
+#include "constants/heal_locations.h"
 #include "pokemon.h"
 #include "roamer.h"
 #include "pokemon_size_record.h"
@@ -160,6 +161,7 @@ static void GiveBattleRoyaleStartingKit(void)
     FlagSet(FLAG_SYS_B_DASH);
     FlagSet(FLAG_RECEIVED_RUNNING_SHOES);
     EnableNationalPokedex();
+    SetLastHealLocationWarp(HEAL_LOCATION_BATTLE_FRONTIER_OUTSIDE_EAST);
 }
 
 void Sav2_ClearSetDefault(void)

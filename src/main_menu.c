@@ -189,6 +189,7 @@ static void Task_HandleMainMenuInput(u8);
 static void Task_HandleMainMenuAPressed(u8);
 static void Task_HandleMainMenuBPressed(u8);
 static void Task_NewGameBirchSpeech_Init(u8);
+static void Task_NewGameQuickStart(u8);
 static void Task_DisplayMainMenuInvalidActionError(u8);
 static void AddBirchSpeechObjects(u8);
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8);
@@ -1286,13 +1287,35 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     AddBirchSpeechObjects(taskId);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
     gTasks[taskId].tBG1HOFS = 0;
-    gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowBirch;
+    gTasks[taskId].func = Task_NewGameQuickStart; // Battle Royale: skip Birch's speech
     gTasks[taskId].tPlayerSpriteId = SPRITE_NONE;
     gTasks[taskId].data[3] = 0xFF;
-    gTasks[taskId].tTimer = 0xD8;
+    gTasks[taskId].tTimer = 30;
     PlayBGM(MUS_ROUTE122);
     ShowBg(0);
     ShowBg(1);
+}
+
+// Battle Royale: shortened intro. Sets up the text box and jumps straight to
+// the boy/girl choice, then the naming screen, then the game.
+static void Task_NewGameQuickStart(u8 taskId)
+{
+    if (gTasks[taskId].tTimer)
+    {
+        gTasks[taskId].tTimer--;
+        return;
+    }
+    InitWindows(sNewGameBirchSpeechTextWindows);
+    LoadMainMenuWindowFrameTiles(0, 0xF3);
+    LoadMessageBoxGfx(0, BIRCH_DLG_BASE_TILE_NUM, BG_PLTT_ID(15));
+    NewGameBirchSpeech_ShowDialogueWindow(0, 1);
+    PutWindowTilemap(0);
+    CopyWindowToVram(0, COPYWIN_GFX);
+    NewGameBirchSpeech_ClearWindow(0);
+    gTasks[taskId].tBG1HOFS = -60;
+    SetGpuReg(REG_OFFSET_BG1HOFS, -60);
+    gTasks[taskId].tIsDoneFadingSprites = TRUE;
+    gTasks[taskId].func = Task_NewGameBirchSpeech_StartPlayerFadeIn;
 }
 
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
@@ -1602,7 +1625,7 @@ static void Task_NewGameBirchSpeech_StartNamingScreen(u8 taskId)
         FreeAndDestroyMonPicSprite(gTasks[taskId].tLotadSpriteId);
         NewGameBirchSpeech_SetDefaultPlayerName(Random() % NUM_PRESET_NAMES);
         DestroyTask(taskId);
-        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_NewGameBirchSpeech_ReturnFromNamingScreen);
+        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_NewGame); // Battle Royale: go straight into the game
     }
 }
 

@@ -1,6 +1,8 @@
 #include "global.h"
 #include "new_game.h"
 #include "random.h"
+#include "script_pokemon_util.h"
+#include "constants/species.h"
 #include "pokemon.h"
 #include "roamer.h"
 #include "pokemon_size_record.h"
@@ -124,10 +126,40 @@ static void ClearFrontierRecord(void)
     gSaveBlock2Ptr->frontier.opponentNames[1][0] = EOS;
 }
 
+// Battle Royale: the player starts in the hub town, in front of the Battle Tower
 static void WarpToTruck(void)
 {
-    SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
+    SetWarpDestination(MAP_GROUP(MAP_BATTLE_ROYALE_TOWN), MAP_NUM(MAP_BATTLE_ROYALE_TOWN), WARP_ID_NONE, 16, 18);
     WarpIntoMap();
+}
+
+// Battle Royale: pool of possible starters. One is picked at random.
+static const u16 sStarterPool[] =
+{
+    SPECIES_TREECKO,
+    SPECIES_TORCHIC,
+    SPECIES_MUDKIP,
+    SPECIES_RALTS,
+    SPECIES_SHROOMISH,
+    SPECIES_ARON,
+    SPECIES_ELECTRIKE,
+    SPECIES_MACHOP,
+    SPECIES_ABRA,
+    SPECIES_TAILLOW,
+    SPECIES_EEVEE,
+};
+
+#define STARTER_LEVEL 5
+#define STARTING_MONEY 3000
+
+static void GiveBattleRoyaleStartingKit(void)
+{
+    ScriptGiveMon(sStarterPool[Random() % ARRAY_COUNT(sStarterPool)], STARTER_LEVEL, ITEM_NONE, 0, 0, 0);
+    FlagSet(FLAG_SYS_POKEMON_GET);
+    FlagSet(FLAG_SYS_POKEDEX_GET);
+    FlagSet(FLAG_SYS_B_DASH);
+    FlagSet(FLAG_RECEIVED_RUNNING_SHOES);
+    EnableNationalPokedex();
 }
 
 void Sav2_ClearSetDefault(void)
@@ -169,7 +201,7 @@ void NewGameInitData(void)
     ResetGabbyAndTy();
     ClearSecretBases();
     ClearBerryTrees();
-    SetMoney(&gSaveBlock1Ptr->money, 3000);
+    SetMoney(&gSaveBlock1Ptr->money, STARTING_MONEY);
     SetCoins(0);
     ResetLinkContestBoolean();
     ResetGameStats();
@@ -194,6 +226,7 @@ void NewGameInitData(void)
     ResetLotteryCorner();
     WarpToTruck();
     RunScriptImmediately(EventScript_ResetAllMapFlags);
+    GiveBattleRoyaleStartingKit();
     ResetMiniGamesRecords();
     InitUnionRoomChatRegisteredTexts();
     InitLilycoveLady();

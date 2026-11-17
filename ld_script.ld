@@ -256,6 +256,7 @@ SECTIONS {
         src/decoration_inventory.o(.text);
         src/roamer.o(.text);
         src/battle_tower.o(.text);
+        src/battle_royale.o(.text);
         src/use_pokeblock.o(.text);
         src/battle_controller_wally.o(.text);
         src/player_pc.o(.text);
@@ -619,6 +620,7 @@ SECTIONS {
         src/move_relearner.o(.rodata);
         src/roamer.o(.rodata);
         src/battle_tower.o(.rodata);
+        src/battle_royale.o(.rodata);
         src/use_pokeblock.o(.rodata);
         src/battle_controller_wally.o(.rodata);
         src/player_pc.o(.rodata);

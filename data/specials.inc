@@ -540,3 +540,9 @@ gSpecials::
 	def_special RemoveRecordsWindow
 	def_special CloseDeptStoreElevatorWindow
 	def_special TrySetBattleTowerLinkType
+	def_special BattleRoyale_StartRun
+	def_special BattleRoyale_SetUpOpponent
+	def_special BattleRoyale_StartTowerBattle
+	def_special BattleRoyale_OnWin
+	def_special BattleRoyale_OnLoss
+	def_special BattleRoyale_Retire

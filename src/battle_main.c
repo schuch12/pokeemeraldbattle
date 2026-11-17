@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_royale.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_script_commands.h"
@@ -1967,6 +1968,10 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
 
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
+
+    // Battle Royale: Tower opponents get a random team for the current tier
+    if (gBattleRoyaleTowerBattle)
+        return BattleRoyale_CreateEnemyParty(party);
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !(gBattleTypeFlags & (BATTLE_TYPE_FRONTIER
                                                                         | BATTLE_TYPE_EREADER_TRAINER

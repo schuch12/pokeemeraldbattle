@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_royale.h"
 #include "battle.h"
 #include "battle_setup.h"
 #include "battle_transition.h"
@@ -496,6 +497,28 @@ void BattleSetup_StartScriptedWildBattle(void)
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
     IncrementDailyWildBattles();
     TryUpdateGymLeaderRematchFromWild();
+}
+
+// Battle Royale: Tower battles. Win or lose, the script that started the
+// battle carries on afterwards (no white out).
+static void CB2_EndBattleRoyaleTowerBattle(void)
+{
+    gBattleRoyaleTowerBattle = FALSE;
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+
+// special: opponent must already be chosen with BattleRoyale_SetUpOpponent
+void BattleRoyale_StartTowerBattle(void)
+{
+    gBattleRoyaleTowerBattle = TRUE;
+    gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    gNoOfApproachingTrainers = 0;
+    sShouldCheckTrainerBScript = FALSE;
+    gWhichTrainerToFaceAfterBattle = 0;
+    sTrainerADefeatSpeech = (u8 *)BattleRoyale_GetDefeatText();
+    gMain.savedCallback = CB2_EndBattleRoyaleTowerBattle;
+    DoTrainerBattle();
+    ScriptContext_Stop();
 }
 
 void BattleSetup_StartLatiBattle(void)

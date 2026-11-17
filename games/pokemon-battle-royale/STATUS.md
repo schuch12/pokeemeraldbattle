@@ -1,9 +1,9 @@
 # Status
 
-- Phase: 2 (Mart, Pokémon Center, Pokémon shop) — DONE, waiting for Drew to test
-- Last working build: `builds/phase2.gba`
-- Next: Phase 3 — Battle Tower Tier 1 with payouts on win and loss
-- Known issues: Tower door and tall grass do nothing yet (Phases 3–4). People inside the Center and Mart still say their old Battle Frontier lines.
+- Phase: 3 (Battle Tower Tier 1) — DONE, waiting for Drew to test
+- Last working build: `builds/phase3.gba`
+- Next: Phase 4 — Tier 2, soft level cap, practice grass
+- Known issues: Drew reported his typed name was replaced by a preset (REID) in Phase 2; not reproducible here (the game only does that when the name box is left empty). Center/Mart bystanders still have Frontier dialogue — Drew may supply 6 lines (3 Center, 3 Mart).
 
 ## Decisions (approved by Drew)
 - Hub town name: バトル・ロワイアル. Title: Pokémon Battle Royale.
@@ -20,9 +20,13 @@
 - Mart stock is in `data/maps/BattleFrontier_Mart/scripts.inc`. Shop script is at the end of `data/maps/BattleFrontier_Lounge5/scripts.inc`; its menu text is in `src/data/script_menu.h` (prices appear in both places).
 - Berry prices raised from ₽20 to ₽100 (`src/data/items.h`) so Oran Berries don't undercut Potions.
 - Blackout point is HEAL_LOCATION_BATTLE_FRONTIER_OUTSIDE_EAST, moved to the hub's Center.
+- Tower: `src/battle_royale.c` holds the tier table (opponent identities, species pool, levels, prize money). Lobby and battle room are new maps `BattleRoyale_TowerLobby` / `BattleRoyale_TowerBattleRoom` reusing the vanilla Tower layouts.
+- Tower battles are normal trainer battles (EXP and items allowed) started by `BattleRoyale_StartTowerBattle` in `src/battle_setup.c`; the enemy team and prize money are overridden in `battle_main.c` / `battle_script_commands.c` while `gBattleRoyaleTowerBattle` is set. Losing never whites out.
+- Run state is in vars 0x40F7–0x40FA (previously unused), see `include/battle_royale.h`.
 - Save format unchanged from vanilla so far.
 
 ## Phase log
 - Phase 0: toolchain installed, vanilla build matched rom.sha1.
 - Phase 1: shortened intro (boy/girl + name only), hub town, random starter, National Dex and running shoes from the start. Tested in a headless emulator: new game, menus, save and continue.
 - Phase 2: Center heals, Mart sells balls/potions/status heals/berries/4 evolution stones, shop sells 6 Pokémon (party or PC). Tested in a headless emulator, including a full party and too little money.
+- Phase 3: Tier 1 (5 battles, random opponents and teams, lv 3–8). Wins pay ₽200/300/400/500/600, clear bonus ₽1500, loss pays ₽200. Tested: full clear, forced loss.

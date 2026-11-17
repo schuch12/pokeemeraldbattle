@@ -23,8 +23,10 @@ BattleRoyaleTown_EventScript_TowerSign::
 	end
 
 BattleRoyaleTown_Text_Welcome:
-	.string "Welcome to {JPN}バトル·ロワイアル{ENG}!\n"
-	.string "Your partner is {STR_VAR_1}!$"
+	.string "Welcome to {JPN}バトル·ロワイアル{ENG},\n"
+	.string "{PLAYER}!\p"
+	.string "Your partner is {STR_VAR_1}!\n"
+	.string "Win TOWER battles to earn money.$"
 
 BattleRoyaleTown_Text_TowerSign:
 	.string "BATTLE TOWER\n"

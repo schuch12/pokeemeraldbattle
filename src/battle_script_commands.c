@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_royale.h"
 #include "battle.h"
 #include "battle_message.h"
 #include "battle_anim.h"
@@ -5581,7 +5582,12 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
     u32 lastMonLevel = 0;
     u32 moneyReward;
 
-    if (trainerId == TRAINER_SECRET_BASE)
+    if (gBattleRoyaleTowerBattle)
+    {
+        // Battle Royale: Tower prize money is set per tier and battle
+        moneyReward = BattleRoyale_GetWinMoney() * gBattleStruct->moneyMultiplier;
+    }
+    else if (trainerId == TRAINER_SECRET_BASE)
     {
         moneyReward = 20 * gBattleResources->secretBase->party.levels[0] * gBattleStruct->moneyMultiplier;
     }

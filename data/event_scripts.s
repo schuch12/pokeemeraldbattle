@@ -481,6 +481,8 @@ gStdScripts_End::
 	.include "data/maps/SafariZone_Southeast/scripts.inc"
 	.include "data/maps/BattleFrontier_OutsideEast/scripts.inc"
 	.include "data/maps/BattleRoyaleTown/scripts.inc"
+	.include "data/maps/BattleRoyale_TowerLobby/scripts.inc"
+	.include "data/maps/BattleRoyale_TowerBattleRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerMultiPartnerRoom/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerMultiCorridor/scripts.inc"
 	.include "data/maps/BattleFrontier_BattleTowerMultiBattleRoom/scripts.inc"

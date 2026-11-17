@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_royale.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -358,7 +359,9 @@ static void (*const sMovementStatusHandler[])(struct LinkPlayerObjectEvent *, st
 void DoWhiteOut(void)
 {
     RunScriptImmediately(EventScript_WhiteOut);
-    // Battle Royale: blacking out no longer halves your money
+    // Battle Royale: blacking out no longer halves your money.
+    // With no money at all it is a game over instead.
+    BattleRoyale_OnWhiteOut();
     HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
     SetWarpDestinationToLastHealLocation();

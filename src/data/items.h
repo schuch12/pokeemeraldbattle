@@ -1174,7 +1174,7 @@ const struct Item gItems[] =
     {
         .name = _("MOON STONE"),
         .itemId = ITEM_MOON_STONE,
-        .price = 0,
+        .price = 2100, // Battle Royale: was 0 (not for sale)
         .description = sMoonStoneDesc,
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
@@ -1734,7 +1734,7 @@ const struct Item gItems[] =
     {
         .name = _("LUM BERRY"),
         .itemId = ITEM_LUM_BERRY,
-        .price = 20,
+        .price = 600, // Battle Royale: was 20
         .holdEffect = HOLD_EFFECT_CURE_STATUS,
         .description = sLumBerryDesc,
         .pocket = POCKET_BERRIES,
@@ -1748,7 +1748,7 @@ const struct Item gItems[] =
     {
         .name = _("SITRUS BERRY"),
         .itemId = ITEM_SITRUS_BERRY,
-        .price = 20,
+        .price = 400, // Battle Royale: was 20
         .holdEffect = HOLD_EFFECT_RESTORE_HP,
         .holdEffectParam = 30,
         .description = sSitrusBerryDesc,

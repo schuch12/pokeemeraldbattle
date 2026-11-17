@@ -1,0 +1,106 @@
+run 600
+press A
+run 300
+press START
+run 300
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press START
+run 60
+press A
+run 600
+mash B 5 80
+opts
+walk UP 4
+run 200
+walk UP 3
+walk RIGHT 2
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press A
+run 200
+shot s1.ppm
+mash B 4 60
+setvar f9 2
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press A
+run 200
+shot s2.ppm
+press A
+run 150
+shot s3.ppm
+press A
+run 150
+shot s4.ppm
+mash A 4 110
+run 300
+pos
+poke16 2024542 1
+poke16 20245a6 0
+poke16 202460a 0
+mashvar A f7 40
+shot s5.ppm
+mash A 2 100
+shot s6.ppm
+mash A 5 100
+run 300
+pos
+getmoney
+money 0
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press A
+run 200
+mash A 7 110
+run 300
+pos
+poke16 2024542 1
+poke16 20245a6 0
+poke16 202460a 0
+mashvar A f7 40
+run 200
+shot s7.ppm
+press A
+run 150
+shot s8.ppm
+mash A 3 100
+run 500
+shot s9.ppm

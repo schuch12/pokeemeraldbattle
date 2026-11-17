@@ -36,7 +36,8 @@ BattleRoyale_TowerBattleRoom_EventScript_Won::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerFaceAttendant
 	waitmovement 0
 	special BattleRoyale_OnWin
-	goto_if_eq VAR_RESULT, TRUE, BattleRoyale_TowerBattleRoom_EventScript_TierCleared
+	goto_if_eq VAR_RESULT, 1, BattleRoyale_TowerBattleRoom_EventScript_TierCleared
+	goto_if_eq VAR_RESULT, 2, BattleRoyale_TowerBattleRoom_EventScript_ChampionCleared
 	msgbox BattleRoyale_TowerBattleRoom_Text_HealMons, MSGBOX_DEFAULT
 	playfanfare MUS_HEAL
 	waitfanfare
@@ -77,15 +78,48 @@ BattleRoyale_TowerBattleRoom_EventScript_TierCleared::
 	special HealPlayerParty
 	goto BattleRoyale_TowerBattleRoom_EventScript_WarpToLobby
 
-BattleRoyale_TowerBattleRoom_EventScript_Lost::
+BattleRoyale_TowerBattleRoom_EventScript_ChampionCleared::
+	playfanfare MUS_OBTAIN_BADGE
+	message BattleRoyale_TowerBattleRoom_Text_ChampionCleared
+	waitmessage
+	waitfanfare
+	waitbuttonpress
+	msgbox BattleRoyale_TowerBattleRoom_Text_ChampionCleared2, MSGBOX_DEFAULT
 	special HealPlayerParty
+	goto BattleRoyale_TowerBattleRoom_EventScript_WarpToLobby
+
+BattleRoyale_TowerBattleRoom_EventScript_Lost::
 	special BattleRoyale_OnLoss
+	copyvar VAR_TEMP_3, VAR_RESULT
 	applymovement LOCALID_BR_ATTENDANT, BattleFrontier_BattleTowerBattleRoom_Movement_AttendantApproachPlayer
 	waitmovement 0
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerFaceAttendant
 	waitmovement 0
-	msgbox BattleRoyale_TowerBattleRoom_Text_Lost, MSGBOX_DEFAULT
+	goto_if_eq VAR_TEMP_3, BR_LOSS_GAME_OVER, BattleRoyale_TowerBattleRoom_EventScript_GameOver
+	special HealPlayerParty
+	call_if_eq VAR_TEMP_3, BR_LOSS_CONSOLATION, BattleRoyale_TowerBattleRoom_EventScript_LostConsolation
+	call_if_eq VAR_TEMP_3, BR_LOSS_FEE, BattleRoyale_TowerBattleRoom_EventScript_LostFee
+	call_if_eq VAR_TEMP_3, BR_LOSS_NOTHING, BattleRoyale_TowerBattleRoom_EventScript_LostNothing
 	goto BattleRoyale_TowerBattleRoom_EventScript_WarpToLobby
+
+BattleRoyale_TowerBattleRoom_EventScript_LostConsolation::
+	msgbox BattleRoyale_TowerBattleRoom_Text_Lost, MSGBOX_DEFAULT
+	return
+
+BattleRoyale_TowerBattleRoom_EventScript_LostFee::
+	msgbox BattleRoyale_TowerBattleRoom_Text_LostFee, MSGBOX_DEFAULT
+	return
+
+BattleRoyale_TowerBattleRoom_EventScript_LostNothing::
+	msgbox BattleRoyale_TowerBattleRoom_Text_LostNothing, MSGBOX_DEFAULT
+	return
+
+BattleRoyale_TowerBattleRoom_EventScript_GameOver::
+	msgbox BattleRoyale_Text_GameOver, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	special BattleRoyale_GameOver
+	end
 
 BattleRoyale_TowerBattleRoom_EventScript_WarpToLobby::
 	closemessage
@@ -116,7 +150,7 @@ BattleRoyale_TowerBattleRoom_Text_Retired:
 
 BattleRoyale_TowerBattleRoom_Text_TierCleared:
 	.string "Congratulations!\n"
-	.string "You cleared TIER {STR_VAR_2}!\p"
+	.string "You cleared {STR_VAR_2}!\p"
 	.string "{PLAYER} received a bonus of\n"
 	.string "¥{STR_VAR_1}!$"
 
@@ -126,6 +160,54 @@ BattleRoyale_TowerBattleRoom_Text_Lost:
 	.string "{PLAYER} received ¥{STR_VAR_1}\n"
 	.string "for taking part.\p"
 	.string "Please try again any time!$"
+
+BattleRoyale_TowerBattleRoom_Text_LostFee:
+	.string "That was a tough one.\n"
+	.string "Your POKéMON have been healed.\p"
+	.string "{PLAYER} paid a fee of ¥{STR_VAR_1}.\p"
+	.string "Please try again any time!$"
+
+BattleRoyale_TowerBattleRoom_Text_LostNothing:
+	.string "That was a tough one.\n"
+	.string "Your POKéMON have been healed.\p"
+	.string "Please try again any time!$"
+
+BattleRoyale_TowerBattleRoom_Text_ChampionCleared:
+	.string "Incredible! You defeated WALLACE!\n"
+	.string "You are the BATTLE ROYALE CHAMPION!\p"
+	.string "{PLAYER} received a bonus of\n"
+	.string "¥{STR_VAR_1}!$"
+
+BattleRoyale_TowerBattleRoom_Text_ChampionCleared2:
+	.string "Every level limit has been lifted.\n"
+	.string "You may challenge any TIER again.\p"
+	.string "Thank you for playing\n"
+	.string "POKéMON BATTLE ROYALE!$"
+
+BattleRoyale_Text_GameOver::
+	.string "Your whole team has fainted, and you\n"
+	.string "have no money left to recover.\p"
+	.string "GAME OVER\p"
+	.string "You will return to the title screen.\n"
+	.string "Continue from your last save.$"
+
+BattleRoyale_Text_BossIntro::
+	.string "I'm the last one standing between\n"
+	.string "you and clearing this TIER.\p"
+	.string "Show me everything you've got!$"
+
+BattleRoyale_Text_BossDefeat::
+	.string "Splendid! You've earned this TIER.$"
+
+BattleRoyale_Text_ChampionIntro::
+	.string "So, you've made it all the way here.\p"
+	.string "I am WALLACE, the last opponent of\n"
+	.string "the BATTLE TOWER.\p"
+	.string "Let us share a battle worthy of\n"
+	.string "a CHAMPION!$"
+
+BattleRoyale_Text_ChampionDefeat::
+	.string "Magnificent. A new CHAMPION is born!$"
 
 BattleRoyale_Text_Intro0::
 	.string "I've been waiting for a challenger!\n"

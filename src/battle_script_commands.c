@@ -3379,6 +3379,10 @@ static void Cmd_getexp(void)
                     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
                         gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
 
+                    // Battle Royale: EXP cheat (see the SKITTY in the Pokemon Center)
+                    if (FlagGet(FLAG_BR_CHEAT_FAST_EXP))
+                        gBattleMoveDamage *= BR_CHEAT_EXP_MULTIPLIER;
+
                     // Battle Royale: soft level cap
                     if (gBattleMoveDamage > 0
                      && GetMonData(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) >= BattleRoyale_GetLevelCap())

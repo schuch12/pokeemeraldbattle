@@ -2380,12 +2380,32 @@ void ShowScrollableMultichoice(void)
         task->tKeepOpenAfterSelect = FALSE;
         task->tTaskId = taskId;
         break;
+    case SCROLL_MULTI_BR_TIERS: // Battle Royale: Tower tier list
+        task->tMaxItemsOnScreen = MAX_SCROLL_MULTI_ON_SCREEN;
+        task->tNumItems = 10;
+        task->tLeft = 19;
+        task->tTop = 1;
+        task->tWidth = 10;
+        task->tHeight = 12;
+        task->tKeepOpenAfterSelect = FALSE;
+        task->tTaskId = taskId;
+        break;
     default:
         gSpecialVar_Result = MULTI_B_PRESSED;
         DestroyTask(taskId);
         break;
     }
 }
+
+static const u8 sText_BRTier1[] = _("TIER 1");
+static const u8 sText_BRTier2[] = _("TIER 2");
+static const u8 sText_BRTier3[] = _("TIER 3");
+static const u8 sText_BRTier4[] = _("TIER 4");
+static const u8 sText_BRTier5[] = _("TIER 5");
+static const u8 sText_BRTier6[] = _("TIER 6");
+static const u8 sText_BRTier7[] = _("TIER 7");
+static const u8 sText_BRTier8[] = _("TIER 8");
+static const u8 sText_BRChampion[] = _("CHAMPION");
 
 static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] =
 {
@@ -2539,6 +2559,19 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
         gText_PokemonMoves,
         gText_Underpowered,
         gText_WhenInDanger,
+        gText_Exit
+    },
+    [SCROLL_MULTI_BR_TIERS] =
+    {
+        sText_BRTier1,
+        sText_BRTier2,
+        sText_BRTier3,
+        sText_BRTier4,
+        sText_BRTier5,
+        sText_BRTier6,
+        sText_BRTier7,
+        sText_BRTier8,
+        sText_BRChampion,
         gText_Exit
     }
 };

@@ -3,6 +3,7 @@ BattleRoyaleTown_MapScripts::
 	.byte 0
 
 BattleRoyaleTown_OnFrame:
+	map_script_2 VAR_BR_GAME_OVER, 1, BattleRoyaleTown_EventScript_GameOver
 	map_script_2 VAR_LITTLEROOT_INTRO_STATE, 0, BattleRoyaleTown_EventScript_Welcome
 	.2byte 0
 
@@ -15,6 +16,15 @@ BattleRoyaleTown_EventScript_Welcome::
 	waitbuttonpress
 	setvar VAR_LITTLEROOT_INTRO_STATE, 1
 	releaseall
+	end
+
+@ Blacked out in the grass with no money (see BattleRoyale_OnWhiteOut)
+BattleRoyaleTown_EventScript_GameOver::
+	lockall
+	msgbox BattleRoyale_Text_GameOver, MSGBOX_DEFAULT
+	closemessage
+	fadescreen FADE_TO_BLACK
+	special BattleRoyale_GameOver
 	end
 
 BattleRoyaleTown_EventScript_TowerSign::

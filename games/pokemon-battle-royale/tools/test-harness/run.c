@@ -60,8 +60,9 @@ int main(int argc, char** argv) {
         else if (!strcmp(cmd, "mashvar")) { unsigned vi; int gap = 30; sscanf(line, "%*s %255s %x %d", arg, &vi, &gap); unsigned pa = strtoul(getenv("SB1PTR"), 0, 16);
             unsigned v0 = core->busRead16(core, VA); int t;
             for (t = 0; t < 400 && core->busRead16(core, VA) == v0; t++) { core->setKeys(core, keymask(arg)); for (int i = 0; i < 4; i++) core->runFrame(core); core->setKeys(core, 0); for (int i = 0; i < gap; i++) core->runFrame(core);
-                FILE* bf = fopen("buff2.txt", "r"); char bl[128]; unsigned ba, bv; while (bf && fgets(bl, sizeof bl, bf)) { if (sscanf(bl, "poke16 %x %x", &ba, &bv) == 2) core->busWrite16(core, ba, bv); else if (sscanf(bl, "poke8 %x %x", &ba, &bv) == 2) core->busWrite8(core, ba, bv); } if (bf) fclose(bf); }
+                FILE* bf = fopen(getenv("BUFF") ? getenv("BUFF") : "buff2.txt", "r"); char bl[128]; unsigned ba, bv; while (bf && fgets(bl, sizeof bl, bf)) { if (sscanf(bl, "poke16 %x %x", &ba, &bv) == 2) core->busWrite16(core, ba, bv); else if (sscanf(bl, "poke8 %x %x", &ba, &bv) == 2) core->busWrite8(core, ba, bv); } if (bf) fclose(bf); }
             printf("mashvar: %d presses, var %x: %u -> %u\n", t, vi, v0, core->busRead16(core, VA)); }
+        else if (!strcmp(cmd, "setvar")) { unsigned vi, v; sscanf(line, "%*s %x %u", &vi, &v); unsigned pa = strtoul(getenv("SB1PTR"), 0, 16); core->busWrite16(core, VA, v); }
         else if (!strcmp(cmd, "peek")) { unsigned a, len=1; sscanf(line, "%*s %x %u", &a, &len); printf("%08x:", a); for (unsigned i=0;i<len;i++) printf(" %02x", core->busRead8(core, a+i)); printf("\n"); }
     }
     return 0;

@@ -24,11 +24,45 @@ BattleRoyale_TowerLobby_EventScript_Attendant::
 	goto_if_ne VAR_BR_TIER, 0, BattleRoyale_TowerLobby_EventScript_RunInProgress
 	message BattleRoyale_TowerLobby_Text_Welcome
 	waitmessage
-	multichoice 20, 4, MULTI_BR_TIERS, FALSE
-	switch VAR_RESULT
-	case 0, BattleRoyale_TowerLobby_EventScript_Tier1
-	case 1, BattleRoyale_TowerLobby_EventScript_Tier2
-	goto BattleRoyale_TowerLobby_EventScript_Cancel
+	setvar VAR_0x8004, SCROLL_MULTI_BR_TIERS
+	special ShowScrollableMultichoice
+	waitstate
+	goto_if_ge VAR_RESULT, BR_NUM_TIERS, BattleRoyale_TowerLobby_EventScript_Cancel
+	copyvar VAR_TEMP_1, VAR_RESULT
+	addvar VAR_TEMP_1, 1
+	@ VAR_TEMP_1 = chosen tier number
+	special BattleRoyale_GetHighestUnlockedTier
+	goto_if_gt VAR_TEMP_1, VAR_RESULT, BattleRoyale_TowerLobby_EventScript_TierLocked
+	copyvar VAR_0x8004, VAR_TEMP_1
+	special BattleRoyale_CheckPartyAllowed
+	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_TowerLobby_EventScript_BannedMon
+	special BattleRoyale_BufferTierInfo
+	call_if_eq VAR_RESULT, FALSE, BattleRoyale_TowerLobby_EventScript_ShowTierInfo
+	call_if_eq VAR_RESULT, TRUE, BattleRoyale_TowerLobby_EventScript_ShowTierInfoFee
+	msgbox BattleRoyale_TowerLobby_Text_EnterTier, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleRoyale_TowerLobby_EventScript_Cancel
+	special HealPlayerParty
+	copyvar VAR_0x8004, VAR_TEMP_1
+	special BattleRoyale_StartRun
+	goto BattleRoyale_TowerLobby_EventScript_EnterBattleRoom
+
+BattleRoyale_TowerLobby_EventScript_ShowTierInfo::
+	msgbox BattleRoyale_TowerLobby_Text_TierInfo, MSGBOX_DEFAULT
+	return
+
+BattleRoyale_TowerLobby_EventScript_ShowTierInfoFee::
+	msgbox BattleRoyale_TowerLobby_Text_TierInfoFee, MSGBOX_DEFAULT
+	return
+
+BattleRoyale_TowerLobby_EventScript_TierLocked::
+	msgbox BattleRoyale_TowerLobby_Text_TierLocked, MSGBOX_DEFAULT
+	release
+	end
+
+BattleRoyale_TowerLobby_EventScript_BannedMon::
+	msgbox BattleRoyale_TowerLobby_Text_BannedMon, MSGBOX_DEFAULT
+	release
+	end
 
 BattleRoyale_TowerLobby_EventScript_RunInProgress::
 	special BattleRoyale_BufferRunInfo
@@ -42,34 +76,13 @@ BattleRoyale_TowerLobby_EventScript_RunInProgress::
 	end
 
 BattleRoyale_TowerLobby_EventScript_ResumeRun::
+	special BattleRoyale_BufferRunInfo
+	special BattleRoyale_CheckPartyAllowed
+	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_TowerLobby_EventScript_BannedMon
 	special HealPlayerParty
-	msgbox BattleRoyale_TowerLobby_Text_RightThisWay, MSGBOX_DEFAULT
-	closemessage
-	warp MAP_BATTLE_ROYALE_TOWER_BATTLE_ROOM, 4, 8
-	waitstate
-	end
+	goto BattleRoyale_TowerLobby_EventScript_EnterBattleRoom
 
-BattleRoyale_TowerLobby_EventScript_Tier1::
-	setvar VAR_0x8004, 1
-	msgbox BattleRoyale_TowerLobby_Text_Tier1Info, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, BattleRoyale_TowerLobby_EventScript_Cancel
-	goto BattleRoyale_TowerLobby_EventScript_StartRun
-
-BattleRoyale_TowerLobby_EventScript_Tier2::
-	goto_if_lt VAR_BR_TIERS_CLEARED, 1, BattleRoyale_TowerLobby_EventScript_Tier2Locked
-	setvar VAR_0x8004, 2
-	msgbox BattleRoyale_TowerLobby_Text_Tier2Info, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, BattleRoyale_TowerLobby_EventScript_Cancel
-	goto BattleRoyale_TowerLobby_EventScript_StartRun
-
-BattleRoyale_TowerLobby_EventScript_Tier2Locked::
-	msgbox BattleRoyale_TowerLobby_Text_Tier2Locked, MSGBOX_DEFAULT
-	release
-	end
-
-BattleRoyale_TowerLobby_EventScript_StartRun::
-	special HealPlayerParty
-	special BattleRoyale_StartRun
+BattleRoyale_TowerLobby_EventScript_EnterBattleRoom::
 	msgbox BattleRoyale_TowerLobby_Text_RightThisWay, MSGBOX_DEFAULT
 	closemessage
 	warp MAP_BATTLE_ROYALE_TOWER_BATTLE_ROOM, 4, 8
@@ -89,21 +102,34 @@ BattleRoyale_TowerLobby_Text_Welcome:
 	.string "Welcome to the BATTLE TOWER!\n"
 	.string "Which TIER would you like to enter?$"
 
-BattleRoyale_TowerLobby_Text_Tier1Info:
-	.string "TIER 1 is five battles in a row\n"
-	.string "against POKéMON up to level 8.\p"
+BattleRoyale_TowerLobby_Text_TierInfo:
+	.string "{STR_VAR_1}:\n"
+	.string "Five battles in a row against\l"
+	.string "POKéMON up to level {STR_VAR_2}.\p"
 	.string "Your POKéMON are healed between\n"
-	.string "battles. Enter TIER 1?$"
+	.string "battles.$"
 
-BattleRoyale_TowerLobby_Text_Tier2Info:
-	.string "TIER 2 is five battles in a row\n"
-	.string "against POKéMON up to level 23.\p"
+BattleRoyale_TowerLobby_Text_TierInfoFee:
+	.string "{STR_VAR_1}:\n"
+	.string "Five battles in a row against\l"
+	.string "POKéMON up to level {STR_VAR_2}.\p"
 	.string "Your POKéMON are healed between\n"
-	.string "battles. Enter TIER 2?$"
+	.string "battles.\p"
+	.string "Be warned: if you lose, you must pay\n"
+	.string "a fee of ¥{STR_VAR_3}.$"
 
-BattleRoyale_TowerLobby_Text_Tier2Locked:
-	.string "I'm sorry. You must clear TIER 1\n"
-	.string "before you can enter TIER 2.$"
+BattleRoyale_TowerLobby_Text_EnterTier:
+	.string "Would you like to enter?$"
+
+BattleRoyale_TowerLobby_Text_TierLocked:
+	.string "I'm sorry. You must clear the TIERS\n"
+	.string "in order. That one isn't open yet.$"
+
+BattleRoyale_TowerLobby_Text_BannedMon:
+	.string "I'm sorry. {STR_VAR_1} is too rare and\n"
+	.string "powerful for this TIER.\p"
+	.string "Legendary POKéMON may only enter\n"
+	.string "the CHAMPION TIER.$"
 
 BattleRoyale_TowerLobby_Text_RunPaused:
 	.string "Your TIER run is on hold.\n"
@@ -114,8 +140,8 @@ BattleRoyale_TowerLobby_Text_TalkToContinue:
 	.string "carry on with your run.$"
 
 BattleRoyale_TowerLobby_Text_ContinueRun:
-	.string "Welcome back! Your TIER {STR_VAR_1} run is\n"
-	.string "on hold. Battle no. {STR_VAR_2} is next.\p"
+	.string "Welcome back! Your run is on hold:\n"
+	.string "{STR_VAR_1}, battle no. {STR_VAR_2}.\p"
 	.string "Would you like to continue it?$"
 
 BattleRoyale_TowerLobby_Text_AbandonRun:
@@ -137,9 +163,22 @@ BattleRoyale_TowerLobby_Text_Rules:
 	.string "Win five battles in a row to clear\n"
 	.string "a TIER. Every win pays prize money,\l"
 	.string "and clearing a TIER pays a bonus.\p"
-	.string "If you lose, the run ends, but you\n"
-	.string "keep your POKéMON and your winnings.\p"
-	.string "POKéMON at level 15 or higher gain\n"
-	.string "very little EXP. until you clear\l"
-	.string "TIER 1. After that, the limit is\l"
-	.string "level 25.$"
+	.string "There are eight TIERS, and then the\n"
+	.string "CHAMPION TIER. Clear them in order.\p"
+	.string "If you lose, the run ends but you\n"
+	.string "keep your POKéMON. From TIER 3 up,\l"
+	.string "losing also costs a fee.\p"
+	.string "If your whole team faints and you\n"
+	.string "have no money at all, it's GAME OVER.\p"
+	.string "Each TIER has a level limit. POKéMON\n"
+	.string "at the limit gain very little EXP.,\l"
+	.string "and traded POKéMON above it may\l"
+	.string "disobey. Clear the TIER to raise it.\p"
+	.string "Legendary POKéMON may only enter\n"
+	.string "the CHAMPION TIER.$"
+
+BattleRoyale_Text_TierName::
+	.string "TIER $"
+
+BattleRoyale_Text_ChampionTierName::
+	.string "CHAMPION TIER$"

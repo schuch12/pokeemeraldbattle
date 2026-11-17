@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle_royale.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_arena.h"
@@ -3927,17 +3928,11 @@ u8 IsMonDisobedient(void)
             return DISOBEDIENCE_OBEDIENT;
         if (!IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))
             return DISOBEDIENCE_OBEDIENT;
-        if (FlagGet(FLAG_BADGE08_GET))
+        // Battle Royale: traded Pokemon obey up to the current tier's level cap
+        // (badges are not used). With every tier cleared, all Pokemon obey.
+        obedienceLevel = BattleRoyale_GetLevelCap();
+        if (obedienceLevel >= MAX_LEVEL)
             return DISOBEDIENCE_OBEDIENT;
-
-        obedienceLevel = 10;
-
-        if (FlagGet(FLAG_BADGE02_GET))
-            obedienceLevel = 30;
-        if (FlagGet(FLAG_BADGE04_GET))
-            obedienceLevel = 50;
-        if (FlagGet(FLAG_BADGE06_GET))
-            obedienceLevel = 70;
     }
 
     if (gBattleMons[gBattlerAttacker].level <= obedienceLevel)

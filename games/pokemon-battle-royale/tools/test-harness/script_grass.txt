@@ -1,0 +1,123 @@
+run 600
+press A
+run 300
+press START
+run 300
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press START
+run 60
+press A
+run 600
+mash B 5 80
+opts
+walk DOWN 15
+walk RIGHT 5
+walk DOWN 9
+walk LEFT 5
+walk DOWN 10
+walk RIGHT 6
+walk DOWN 2
+pos
+poke16 2024542 1
+poke16 20245a6 0
+poke16 202460a 0
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+mash A 30 50
+run 300
+pos
+getmoney
+shot s1.ppm
+mash A 3 60
+money 0
+walk RIGHT 13
+walk UP 1
+walk RIGHT 6
+walk DOWN 2
+pos
+poke16 2024542 1
+poke16 20245a6 0
+poke16 202460a 0
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+mash A 30 50
+run 200
+pos
+shot s2.ppm
+press A
+run 200
+shot s3.ppm
+mash A 3 100
+run 500
+shot s4.ppm

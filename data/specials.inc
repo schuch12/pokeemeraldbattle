@@ -547,3 +547,9 @@ gSpecials::
 	def_special BattleRoyale_OnLoss
 	def_special BattleRoyale_Retire
 	def_special BattleRoyale_BufferRunInfo
+	def_special BattleRoyale_BuyShopMon
+	def_special BattleRoyale_BufferShopOffer
+	def_special BattleRoyale_GameOver
+	def_special BattleRoyale_CheckPartyAllowed
+	def_special BattleRoyale_BufferTierInfo
+	def_special BattleRoyale_GetHighestUnlockedTier

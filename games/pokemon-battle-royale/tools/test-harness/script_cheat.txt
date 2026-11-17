@@ -1,0 +1,105 @@
+run 600
+press A
+run 300
+press START
+run 300
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press START
+run 60
+press A
+run 600
+mash B 5 80
+opts
+walk DOWN 15
+walk RIGHT 5
+walk DOWN 9
+walk LEFT 5
+walk DOWN 10
+walk LEFT 13
+walk UP 1
+run 200
+pos
+walk UP 4
+walk LEFT 6
+pos
+press UP 2
+press A
+run 200
+press A
+run 200
+shot s1.ppm
+press A
+run 100
+shot s2.ppm
+press A
+run 200
+shot s3.ppm
+press A
+run 100
+press DOWN
+press A
+run 200
+press A
+run 100
+press DOWN
+press DOWN
+press A
+run 200
+press A
+run 100
+press DOWN
+press DOWN
+press DOWN
+press A
+run 200
+shot s4.ppm
+press A
+run 100
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press A
+run 300
+shot s5.ppm
+mash A 3 150
+shot s6.ppm
+press A
+run 200
+shot s7.ppm
+press A
+run 100
+mash B 3 60
+getmoney
+shot s8.ppm
+press A
+run 200
+mash A 2 150
+shot s9.ppm

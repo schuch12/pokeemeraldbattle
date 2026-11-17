@@ -776,13 +776,19 @@ static const struct MenuAction MultichoiceList_Exit[] =
     {gText_Exit},
 };
 
-// Battle Royale: Pokémon shop menu
-static const u8 sText_BRShop_0[] = _("ZIGZAGOON{CLEAR_TO 66}¥1000");
-static const u8 sText_BRShop_1[] = _("WINGULL{CLEAR_TO 66}¥1500");
-static const u8 sText_BRShop_2[] = _("MAKUHITA{CLEAR_TO 66}¥2000");
-static const u8 sText_BRShop_3[] = _("GEODUDE{CLEAR_TO 66}¥2000");
-static const u8 sText_BRShop_4[] = _("GASTLY{CLEAR_TO 66}¥3000");
-static const u8 sText_BRShop_5[] = _("TRAPINCH{CLEAR_TO 66}¥3500");
+// Battle Royale: Pokémon shop menus (order must match sShopMons in battle_royale.c)
+static const u8 sText_BRShop_0[] = _("ZIGZAGOON");
+static const u8 sText_BRShop_1[] = _("WINGULL");
+static const u8 sText_BRShop_2[] = _("MAKUHITA");
+static const u8 sText_BRShop_3[] = _("GEODUDE");
+static const u8 sText_BRShop_4[] = _("GASTLY");
+static const u8 sText_BRShop_5[] = _("TRAPINCH");
+static const u8 sText_BRShopRare_0[] = _("HERACROSS");
+static const u8 sText_BRShopRare_1[] = _("SKARMORY");
+static const u8 sText_BRShopRare_2[] = _("DRATINI");
+static const u8 sText_BRShopRare_3[] = _("LARVITAR");
+static const u8 sText_BRShopRare_4[] = _("BAGON");
+static const u8 sText_BRShopRare_5[] = _("BELDUM");
 
 static const struct MenuAction MultichoiceList_BRPokemonShop[] =
 {
@@ -795,14 +801,14 @@ static const struct MenuAction MultichoiceList_BRPokemonShop[] =
     {gText_Exit},
 };
 
-// Battle Royale: Tower tier menu
-static const u8 sText_BRTier1[] = _("TIER 1");
-static const u8 sText_BRTier2[] = _("TIER 2");
-
-static const struct MenuAction MultichoiceList_BRTiers[] =
+static const struct MenuAction MultichoiceList_BRPokemonShopRare[] =
 {
-    {sText_BRTier1},
-    {sText_BRTier2},
+    {sText_BRShopRare_0},
+    {sText_BRShopRare_1},
+    {sText_BRShopRare_2},
+    {sText_BRShopRare_3},
+    {sText_BRShopRare_4},
+    {sText_BRShopRare_5},
     {gText_Exit},
 };
 
@@ -818,6 +824,25 @@ static const struct MenuAction MultichoiceList_BRBetweenBattles[] =
     {sText_BRRetire},
 };
 
+// Battle Royale: cheat menu (SKITTY in the Pokemon Center)
+static const u8 sText_BRCheatLevelCap[] = _("LEVEL LIMIT ON/OFF");
+static const u8 sText_BRCheatAllTiers[] = _("ALL TIERS OPEN ON/OFF");
+static const u8 sText_BRCheatFastExp[] = _("EXP ×4 ON/OFF");
+static const u8 sText_BRCheatMoney[] = _("GET ¥100000");
+static const u8 sText_BRCheatCandy[] = _("GET 10 RARE CANDIES");
+static const u8 sText_BRCheatHeal[] = _("HEAL PARTY");
+
+static const struct MenuAction MultichoiceList_BRCheats[] =
+{
+    {sText_BRCheatLevelCap},
+    {sText_BRCheatAllTiers},
+    {sText_BRCheatFastExp},
+    {sText_BRCheatMoney},
+    {sText_BRCheatCandy},
+    {sText_BRCheatHeal},
+    {gText_Exit},
+};
+
 struct MultichoiceListStruct
 {
     const struct MenuAction *list;
@@ -827,8 +852,9 @@ struct MultichoiceListStruct
 static const struct MultichoiceListStruct sMultichoiceLists[] =
 {
     [MULTI_BR_POKEMON_SHOP]            = MULTICHOICE(MultichoiceList_BRPokemonShop),
-    [MULTI_BR_TIERS]                   = MULTICHOICE(MultichoiceList_BRTiers),
+    [MULTI_BR_POKEMON_SHOP_RARE]       = MULTICHOICE(MultichoiceList_BRPokemonShopRare),
     [MULTI_BR_BETWEEN_BATTLES]         = MULTICHOICE(MultichoiceList_BRBetweenBattles),
+    [MULTI_BR_CHEATS]                  = MULTICHOICE(MultichoiceList_BRCheats),
     [MULTI_BRINEY_ON_DEWFORD]          = MULTICHOICE(MultichoiceList_BrineyOnDewford),
     [MULTI_PC]                         = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_ENTERINFO]                  = MULTICHOICE(MultichoiceList_EnterInfo),

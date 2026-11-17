@@ -202,84 +202,57 @@ BattleFrontier_Lounge5_Text_GirlPlaysAtRedHouseALot::
 
 
 @ ---- Battle Royale: Pokemon shop ----
+@ VAR_0x8005 = stock list (0 standard, 1 rare), VAR_0x8004 = chosen item.
+@ Stock, levels and prices are in src/battle_royale.c (sShopMons).
 BattleRoyale_PokemonShop_EventScript_Seller::
 	lock
 	faceplayer
+	setvar VAR_0x8005, 0
 	msgbox BattleRoyale_PokemonShop_Text_Welcome, MSGBOX_DEFAULT
+	goto BattleRoyale_PokemonShop_EventScript_ShowMenu
+
+BattleRoyale_PokemonShop_EventScript_RareSeller::
+	lock
+	faceplayer
+	goto_if_lt VAR_BR_TIERS_CLEARED, BR_RARE_SHOP_TIERS, BattleRoyale_PokemonShop_EventScript_RareLocked
+	setvar VAR_0x8005, 1
+	msgbox BattleRoyale_PokemonShop_Text_RareWelcome, MSGBOX_DEFAULT
+	goto BattleRoyale_PokemonShop_EventScript_ShowMenu
+
+BattleRoyale_PokemonShop_EventScript_RareLocked::
+	msgbox BattleRoyale_PokemonShop_Text_RareLocked, MSGBOX_DEFAULT
+	release
+	end
+
+BattleRoyale_PokemonShop_EventScript_ShowMenu::
 	closemessage
 	showmoneybox 0, 0
-	multichoice 12, 0, MULTI_BR_POKEMON_SHOP, FALSE
-	switch VAR_RESULT
-	case 0, BattleRoyale_PokemonShop_EventScript_Buy0
-	case 1, BattleRoyale_PokemonShop_EventScript_Buy1
-	case 2, BattleRoyale_PokemonShop_EventScript_Buy2
-	case 3, BattleRoyale_PokemonShop_EventScript_Buy3
-	case 4, BattleRoyale_PokemonShop_EventScript_Buy4
-	case 5, BattleRoyale_PokemonShop_EventScript_Buy5
+	call_if_eq VAR_0x8005, 0, BattleRoyale_PokemonShop_EventScript_StandardMenu
+	call_if_eq VAR_0x8005, 1, BattleRoyale_PokemonShop_EventScript_RareMenu
+	goto_if_ge VAR_RESULT, BR_SHOP_MONS_PER_LIST, BattleRoyale_PokemonShop_EventScript_Exit
+	copyvar VAR_0x8004, VAR_RESULT
+	special BattleRoyale_BufferShopOffer
+	msgbox BattleRoyale_PokemonShop_Text_ConfirmBuy, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleRoyale_PokemonShop_EventScript_Exit
+	special BattleRoyale_BuyShopMon
+	goto_if_eq VAR_RESULT, BR_SHOP_NO_MONEY, BattleRoyale_PokemonShop_EventScript_NotEnoughMoney
+	goto_if_eq VAR_RESULT, BR_SHOP_NO_ROOM, BattleRoyale_PokemonShop_EventScript_NoRoom
+	copyvar VAR_TEMP_2, VAR_RESULT
+	goto BattleRoyale_PokemonShop_EventScript_Bought
+
+BattleRoyale_PokemonShop_EventScript_StandardMenu::
+	multichoice 17, 0, MULTI_BR_POKEMON_SHOP, FALSE
+	return
+
+BattleRoyale_PokemonShop_EventScript_RareMenu::
+	multichoice 17, 0, MULTI_BR_POKEMON_SHOP_RARE, FALSE
+	return
+
+BattleRoyale_PokemonShop_EventScript_Exit::
 	hidemoneybox
 	msgbox BattleRoyale_PokemonShop_Text_ComeAgain, MSGBOX_DEFAULT
 	release
 	end
-
-BattleRoyale_PokemonShop_EventScript_Buy0::
-	checkmoney 1000
-	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_PokemonShop_EventScript_NotEnoughMoney
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_ZIGZAGOON
-	givemon SPECIES_ZIGZAGOON, 5
-	goto_if_eq VAR_RESULT, MON_CANT_GIVE, BattleRoyale_PokemonShop_EventScript_NoRoom
-	copyvar VAR_TEMP_2, VAR_RESULT
-	removemoney 1000
-	goto BattleRoyale_PokemonShop_EventScript_Bought
-
-BattleRoyale_PokemonShop_EventScript_Buy1::
-	checkmoney 1500
-	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_PokemonShop_EventScript_NotEnoughMoney
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_WINGULL
-	givemon SPECIES_WINGULL, 5
-	goto_if_eq VAR_RESULT, MON_CANT_GIVE, BattleRoyale_PokemonShop_EventScript_NoRoom
-	copyvar VAR_TEMP_2, VAR_RESULT
-	removemoney 1500
-	goto BattleRoyale_PokemonShop_EventScript_Bought
-
-BattleRoyale_PokemonShop_EventScript_Buy2::
-	checkmoney 2000
-	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_PokemonShop_EventScript_NotEnoughMoney
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_MAKUHITA
-	givemon SPECIES_MAKUHITA, 5
-	goto_if_eq VAR_RESULT, MON_CANT_GIVE, BattleRoyale_PokemonShop_EventScript_NoRoom
-	copyvar VAR_TEMP_2, VAR_RESULT
-	removemoney 2000
-	goto BattleRoyale_PokemonShop_EventScript_Bought
-
-BattleRoyale_PokemonShop_EventScript_Buy3::
-	checkmoney 2000
-	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_PokemonShop_EventScript_NotEnoughMoney
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_GEODUDE
-	givemon SPECIES_GEODUDE, 5
-	goto_if_eq VAR_RESULT, MON_CANT_GIVE, BattleRoyale_PokemonShop_EventScript_NoRoom
-	copyvar VAR_TEMP_2, VAR_RESULT
-	removemoney 2000
-	goto BattleRoyale_PokemonShop_EventScript_Bought
-
-BattleRoyale_PokemonShop_EventScript_Buy4::
-	checkmoney 3000
-	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_PokemonShop_EventScript_NotEnoughMoney
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_GASTLY
-	givemon SPECIES_GASTLY, 5
-	goto_if_eq VAR_RESULT, MON_CANT_GIVE, BattleRoyale_PokemonShop_EventScript_NoRoom
-	copyvar VAR_TEMP_2, VAR_RESULT
-	removemoney 3000
-	goto BattleRoyale_PokemonShop_EventScript_Bought
-
-BattleRoyale_PokemonShop_EventScript_Buy5::
-	checkmoney 3500
-	goto_if_eq VAR_RESULT, FALSE, BattleRoyale_PokemonShop_EventScript_NotEnoughMoney
-	setvar VAR_TEMP_TRANSFERRED_SPECIES, SPECIES_TRAPINCH
-	givemon SPECIES_TRAPINCH, 5
-	goto_if_eq VAR_RESULT, MON_CANT_GIVE, BattleRoyale_PokemonShop_EventScript_NoRoom
-	copyvar VAR_TEMP_2, VAR_RESULT
-	removemoney 3500
-	goto BattleRoyale_PokemonShop_EventScript_Bought
 
 BattleRoyale_PokemonShop_EventScript_Bought::
 	updatemoneybox
@@ -292,7 +265,7 @@ BattleRoyale_PokemonShop_EventScript_Bought::
 	bufferspeciesname STR_VAR_1, VAR_TEMP_TRANSFERRED_SPECIES
 	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, BattleRoyale_PokemonShop_EventScript_AfterNickname
-	goto_if_eq VAR_TEMP_2, MON_GIVEN_TO_PC, BattleRoyale_PokemonShop_EventScript_NicknameBoxMon
+	goto_if_eq VAR_TEMP_2, BR_SHOP_TO_PC, BattleRoyale_PokemonShop_EventScript_NicknameBoxMon
 	call Common_EventScript_GetGiftMonPartySlot
 	call Common_EventScript_NameReceivedPartyMon
 	goto BattleRoyale_PokemonShop_EventScript_AfterNickname
@@ -302,7 +275,7 @@ BattleRoyale_PokemonShop_EventScript_NicknameBoxMon::
 	goto BattleRoyale_PokemonShop_EventScript_AfterNickname
 
 BattleRoyale_PokemonShop_EventScript_AfterNickname::
-	call_if_eq VAR_TEMP_2, MON_GIVEN_TO_PC, Common_EventScript_TransferredToPC
+	call_if_eq VAR_TEMP_2, BR_SHOP_TO_PC, Common_EventScript_TransferredToPC
 	msgbox BattleRoyale_PokemonShop_Text_TakeCare, MSGBOX_DEFAULT
 	release
 	end
@@ -321,7 +294,21 @@ BattleRoyale_PokemonShop_EventScript_NoRoom::
 
 BattleRoyale_PokemonShop_Text_Welcome:
 	.string "Welcome to the POKéMON SHOP!\n"
-	.string "Every POKéMON here is level 5.$"
+	.string "My POKéMON grow as you clear TIERS.$"
+
+BattleRoyale_PokemonShop_Text_RareWelcome:
+	.string "Looking for something special?\n"
+	.string "I deal in rare POKéMON.$"
+
+BattleRoyale_PokemonShop_Text_RareLocked:
+	.string "I deal in rare POKéMON, but only\n"
+	.string "with proven TRAINERS.\p"
+	.string "Come back when you've cleared\n"
+	.string "TIER 2.$"
+
+BattleRoyale_PokemonShop_Text_ConfirmBuy:
+	.string "{STR_VAR_1}, level {STR_VAR_2},\n"
+	.string "costs ¥{STR_VAR_3}. Buy it?$"
 
 BattleRoyale_PokemonShop_Text_Bought:
 	.string "{PLAYER} bought {STR_VAR_1}!$"

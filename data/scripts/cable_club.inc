@@ -263,6 +263,8 @@ CableClub_EventScript_CableClubUnlockedRecordCorner::
 	end
 
 CableClub_EventScript_Colosseum::
+	@ Battle Royale: link battles open after enough tiers are cleared
+	goto_if_lt VAR_BR_TIERS_CLEARED, BR_LINK_BATTLE_TIERS, CableClub_EventScript_BattleRoyaleLinkLocked
 	copyvar VAR_0x8007, VAR_LAST_TALKED
 	goto CableClub_EventScript_SelectBattleMode
 	end
@@ -1351,3 +1353,12 @@ MossdeepCity_GameCorner_1F_EventScript_DodrioBerryPickingRecords::
 	special ShowDodrioBerryPickingRecords
 	releaseall
 	end
+
+CableClub_EventScript_BattleRoyaleLinkLocked::
+	msgbox CableClub_Text_BattleRoyaleLinkLocked, MSGBOX_DEFAULT
+	goto CableClub_EventScript_AbortLink
+	end
+
+CableClub_Text_BattleRoyaleLinkLocked:
+	.string "I'm sorry. Link battles open once\n"
+	.string "you have cleared TIER 4.$"

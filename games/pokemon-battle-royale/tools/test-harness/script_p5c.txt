@@ -1,0 +1,31 @@
+run 600
+press A
+run 300
+press START
+run 300
+press A
+run 500
+opts
+pos
+getmoney
+shot s5.ppm
+press UP 2
+press A
+run 300
+press A
+run 200
+press A
+run 200
+press A
+run 400
+pos
+shot s6.ppm
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 6 100
+run 300
+getmoney
+pos
+shot s7.ppm

@@ -1,0 +1,260 @@
+run 600
+press A
+run 300
+press START
+run 300
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press START
+run 60
+press A
+run 600
+mash B 5 80
+opts
+walk UP 4
+run 200
+walk UP 3
+walk RIGHT 2
+mash B 4 40
+press UP 2
+press A
+run 220
+shot s1.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+shot s2.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+shot s3.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press DOWN
+shot s4.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+shot s5.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+shot s6.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+shot s7.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+shot s8.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+mash B 4 40
+press UP 2
+press A
+run 220
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+shot s9.ppm
+press A
+run 150
+mash A 7 110
+run 300
+pos
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+mashvar A f8 30
+run 100
+mash A 8 110
+run 300
+getmoney
+peek 2024540 1
+shot s10.ppm

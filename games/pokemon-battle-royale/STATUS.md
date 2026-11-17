@@ -1,9 +1,10 @@
 # Status
 
-- Phase: 4 (Tier 2, soft level cap, practice grass) — DONE, waiting for Drew to test
-- Last working build: `builds/phase4.gba`
-- Next: Phase 5 — save and quit between Tower battles (resume continues the run); full run-through test
-- Known issues: none known. Not tested: blacking out in the grass.
+- Phase: 5 (save and quit between Tower battles; full run-through) — DONE. Proof of concept complete, waiting for Drew's final test (mGBA, then EZ-Flash Omega).
+- Last working build: `builds/phase5.gba`
+- Next: Drew's verdict on the POC; then plan the full game (tiers 3–8, champion, bankruptcy game over, trade rules, legendary ban, link battles).
+- Known issues: none known. Not tested here: real hardware / EZ-Flash, blacking out in the grass, link trading.
+- Loose ends: a paused run can be left on hold while the player trains, shops or heals in town (allowed for now). Title screen and some bystander-free interiors are still vanilla.
 
 ## Decisions (approved by Drew)
 - Hub town name: バトル・ロワイアル. Title: Pokémon Battle Royale.
@@ -27,7 +28,8 @@
 - Run state is in vars 0x40F7–0x40FA (previously unused), see `include/battle_royale.h`.
 - Soft level cap: `BattleRoyale_GetLevelCap` (cap of the first uncleared tier: 15, then 25); applied in `Cmd_getexp` in `battle_script_commands.c`, EXP cut to 10% at or above the cap.
 - Wild Pokémon for the hub grass are the `MAP_BATTLE_ROYALE_TOWN` entry in `src/data/wild_encounters.json` (lv 4–12). Blacking out no longer halves money (`DoWhiteOut`).
-- Save format unchanged from vanilla so far.
+- Save and quit: the between-battles menu (NEXT BATTLE / SAVE AND QUIT / RETIRE) sends the player to the lobby with the run kept in vars 0x40F7–0x40FA; `VAR_BR_PAUSED` (0x40FB) makes the lobby offer the normal save once. Talking to the attendant resumes or abandons the run. The player is never saved inside the battle room, so a reload cannot soft-lock.
+- Save format unchanged from vanilla (Flash 128K, same block layout; only previously unused vars are used).
 
 ## Phase log
 - Phase 0: toolchain installed, vanilla build matched rom.sha1.
@@ -35,3 +37,4 @@
 - Phase 2: Center heals, Mart sells balls/potions/status heals/berries/4 evolution stones, shop sells 6 Pokémon (party or PC). Tested in a headless emulator, including a full party and too little money.
 - Phase 3: Tier 1 (5 battles, random opponents and teams, lv 3–8). Wins pay ₽200/300/400/500/600, clear bonus ₽1500, loss pays ₽200. Tested: full clear, forced loss.
 - Phase 4: Tier 2 (lv 14–23, evolved Pokémon, teams of 2–4; wins ₽600/800/1000/1200/1500, bonus ₽4000, loss ₽500), tier menu with Tier 2 locked until Tier 1 is cleared, level cap, practice grass, 3 starters, Drew's NPC quotes. Tested with a boosted team: Tier 1 clear → Tier 2 clear, money and progress correct; level stalls at 15 in the grass.
+- Phase 5: save and quit between battles, resume or abandon from the lobby. Full run-through tested over three emulator sessions with a boosted team: Tier 1 battle 1 → save → reload → clear Tier 1 → Tier 2 two battles → save → reload → clear Tier 2. Final money ₽15600 as expected.

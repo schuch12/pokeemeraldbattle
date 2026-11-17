@@ -546,3 +546,4 @@ gSpecials::
 	def_special BattleRoyale_OnWin
 	def_special BattleRoyale_OnLoss
 	def_special BattleRoyale_Retire
+	def_special BattleRoyale_BufferRunInfo

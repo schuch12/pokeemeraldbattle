@@ -806,6 +806,18 @@ static const struct MenuAction MultichoiceList_BRTiers[] =
     {gText_Exit},
 };
 
+// Battle Royale: menu between Tower battles
+static const u8 sText_BRNextBattle[] = _("NEXT BATTLE");
+static const u8 sText_BRSaveAndQuit[] = _("SAVE AND QUIT");
+static const u8 sText_BRRetire[] = _("RETIRE");
+
+static const struct MenuAction MultichoiceList_BRBetweenBattles[] =
+{
+    {sText_BRNextBattle},
+    {sText_BRSaveAndQuit},
+    {sText_BRRetire},
+};
+
 struct MultichoiceListStruct
 {
     const struct MenuAction *list;
@@ -816,6 +828,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
 {
     [MULTI_BR_POKEMON_SHOP]            = MULTICHOICE(MultichoiceList_BRPokemonShop),
     [MULTI_BR_TIERS]                   = MULTICHOICE(MultichoiceList_BRTiers),
+    [MULTI_BR_BETWEEN_BATTLES]         = MULTICHOICE(MultichoiceList_BRBetweenBattles),
     [MULTI_BRINEY_ON_DEWFORD]          = MULTICHOICE(MultichoiceList_BrineyOnDewford),
     [MULTI_PC]                         = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_ENTERINFO]                  = MULTICHOICE(MultichoiceList_EnterInfo),

@@ -41,8 +41,13 @@ BattleRoyale_TowerBattleRoom_EventScript_Won::
 	playfanfare MUS_HEAL
 	waitfanfare
 	special HealPlayerParty
-	msgbox BattleRoyale_TowerBattleRoom_Text_ReadyForNext, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, BattleRoyale_TowerBattleRoom_EventScript_AskRetire
+BattleRoyale_TowerBattleRoom_EventScript_AskNext::
+	message BattleRoyale_TowerBattleRoom_Text_ReadyForNext
+	waitmessage
+	multichoice 18, 6, MULTI_BR_BETWEEN_BATTLES, TRUE
+	switch VAR_RESULT
+	case 1, BattleRoyale_TowerBattleRoom_EventScript_SaveAndQuit
+	case 2, BattleRoyale_TowerBattleRoom_EventScript_AskRetire
 BattleRoyale_TowerBattleRoom_EventScript_Continue::
 	closemessage
 	applymovement LOCALID_PLAYER, BattleFrontier_BattleTowerBattleRoom_Movement_PlayerFaceBattle
@@ -53,9 +58,14 @@ BattleRoyale_TowerBattleRoom_EventScript_Continue::
 
 BattleRoyale_TowerBattleRoom_EventScript_AskRetire::
 	msgbox BattleRoyale_TowerBattleRoom_Text_ReallyRetire, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, BattleRoyale_TowerBattleRoom_EventScript_Continue
+	goto_if_eq VAR_RESULT, NO, BattleRoyale_TowerBattleRoom_EventScript_AskNext
 	special BattleRoyale_Retire
 	msgbox BattleRoyale_TowerBattleRoom_Text_Retired, MSGBOX_DEFAULT
+	goto BattleRoyale_TowerBattleRoom_EventScript_WarpToLobby
+
+BattleRoyale_TowerBattleRoom_EventScript_SaveAndQuit::
+	msgbox BattleRoyale_TowerBattleRoom_Text_PauseRun, MSGBOX_DEFAULT
+	setvar VAR_BR_PAUSED, 1
 	goto BattleRoyale_TowerBattleRoom_EventScript_WarpToLobby
 
 BattleRoyale_TowerBattleRoom_EventScript_TierCleared::
@@ -89,7 +99,11 @@ BattleRoyale_TowerBattleRoom_Text_HealMons:
 
 BattleRoyale_TowerBattleRoom_Text_ReadyForNext:
 	.string "Battle no. {STR_VAR_1} is next.\n"
-	.string "Are you ready?$"
+	.string "What would you like to do?$"
+
+BattleRoyale_TowerBattleRoom_Text_PauseRun:
+	.string "I'll hold your place in this TIER.\n"
+	.string "Let's go back to the lobby.$"
 
 BattleRoyale_TowerBattleRoom_Text_ReallyRetire:
 	.string "Do you want to stop here?\n"

@@ -8,6 +8,8 @@
 #define VAR_BR_TIERS_CLEARED   VAR_UNUSED_0x40F9 // highest tier cleared so far
 #define VAR_BR_USED_TRAINERS   VAR_UNUSED_0x40FA // bitmask of opponents already met this run
 
+#define VAR_BR_PAUSED          VAR_UNUSED_0x40FB // 1 = just left a run to save; lobby offers to save
+
 #define BR_NUM_TIERS          2
 #define BR_BATTLES_PER_TIER   5
 #define BR_OVER_CAP_EXP_PERCENT 10 // EXP kept by Pokemon at or above the level cap

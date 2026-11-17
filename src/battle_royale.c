@@ -228,6 +228,7 @@ static void EndRun(void)
     VarSet(VAR_BR_TIER, 0);
     VarSet(VAR_BR_BATTLE_NUM, 0);
     VarSet(VAR_BR_USED_TRAINERS, 0);
+    VarSet(VAR_BR_PAUSED, 0);
 }
 
 // The soft level cap follows progress: it is the cap of the first tier the
@@ -357,4 +358,12 @@ void BattleRoyale_OnLoss(void)
 void BattleRoyale_Retire(void)
 {
     EndRun();
+}
+
+// special: writes the paused run's tier to STR_VAR_1 and the number of the
+// next battle to STR_VAR_2
+void BattleRoyale_BufferRunInfo(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, VarGet(VAR_BR_TIER), STR_CONV_MODE_LEFT_ALIGN, 1);
+    ConvertIntToDecimalStringN(gStringVar2, GetBattleNum() + 1, STR_CONV_MODE_LEFT_ALIGN, 1);
 }

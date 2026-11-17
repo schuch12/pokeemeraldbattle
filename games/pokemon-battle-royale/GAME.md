@@ -9,5 +9,5 @@
 
 ## Building
 Needs `binutils-arm-none-eabi`, `libpng-dev`, and agbcc (https://github.com/pret/agbcc) installed into `tools/agbcc`.
-Then `make` produces `pokeemerald.gba`. Playable builds for testing are copied to `builds/`. Current: `BattleRoyale_Beta_v0.1.gba`.
+Then `make` produces `pokeemerald.gba`. Playable builds for testing are copied to `builds/`. Current: `BattleRoyale_Beta_v0.1.1.gba`.
 Full setup steps and a map of the code are in `HANDOFF_OPUS.md`.

@@ -4,7 +4,7 @@ You are picking up a Pokémon Emerald romhack (pret/pokeemerald decomp) at its f
 All planned features are built. **Your job is to find and fix bugs in what exists, not to
 add features**, unless Drew asks. Read `GAME.md` and `STATUS.md` in this folder first.
 
-- Beta ROM: `builds/BattleRoyale_Beta_v0.1.gba` (SHA-1 `795a3502d33636d1477ee60afbe16e9d0acbf40f`)
+- Current ROM: `builds/BattleRoyale_Beta_v0.1.1.gba` (SHA-1 `0f0380f009c5b7b1d9f875416b93c409f771c894`). `BattleRoyale_Beta_v0.1.gba` is the first beta.
 - Branch: `claude/beautiful-allen-khfrqu`
 - Earlier milestones: `builds/phase1.gba` … `phase5.gba` (kept for reference)
 
@@ -85,10 +85,11 @@ Rules implemented:
 - **Pokémon shop**: standard clerk (6 species) and rare clerk (6 species, after Tier 2).
   Level sold = level cap − 10 (min 5); price = base × (tiers cleared + 1).
 - **Mart** stock has three stages (start, after Tier 2, after Tier 5).
-- **Practice grass**: 12 species, level 4–12 plus a bonus that grows with tiers cleared.
+- **Practice grass**: 12 species, level 3–8 plus a bonus that grows with tiers cleared (lowered from 4–12 in v0.1.1 after Drew blacked out to a level 11 wild Pokémon with level 5 starters).
+- **Running from wild Pokémon always succeeds** (`TryRunFromBattle` in `src/battle_util.c`), unless a trapping move or ability applies.
 - **Link battles** (Cable Club Colosseum) open after Tier 4. Trading is always open.
 - **Cheat menu**: talk to the Skitty in the Pokémon Center. Toggles: level limit off, all
-  tiers open, EXP ×4. Actions: +₽100000, 10 Rare Candies, heal party. Drew asked for this.
+  tiers open, EXP ×4. Actions: +₽100000, 10 Rare Candies, BALLS (5 each of Master, Ultra and Great Ball), heal party. Drew asked for this.
 
 ## 5. Where things live
 
@@ -143,7 +144,7 @@ a var changes; each press also re-applies the boosts in `buff2.txt` unless `BUFF
 - `script_full.txt` — clears all nine tiers with a boosted lead. Expected final line: `money 365000 … cleared=9`.
 - `script_rules.txt` (`BUFF=none`) — locked tier, loss fee, Tower game over.
 - `script_grass.txt` (`BUFF=none`) — grass blackout with and without money.
-- `script_cheat.txt` — Skitty cheat menu.
+- `script_cheat.txt` — Skitty cheat menu. `script_balls_run.txt` (`BUFF=none`) — BALLS cheat and running from a wild battle.
 - `script_p5a2.txt`, `script_p5b.txt`, `script_p5c.txt` — three sessions sharing one save: pause, save, reload, resume.
 - `render.py LAYOUT_ID out.png [scale]` draws a map layout; `dump.py` prints block ids.
 

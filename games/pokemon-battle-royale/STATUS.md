@@ -1,7 +1,7 @@
 # Status
 
 - Phase: **Beta v0.1** — all planned features built. Next step is bug fixing and balance (see `HANDOFF_OPUS.md`).
-- Last working build: `builds/BattleRoyale_Beta_v0.1.gba`
+- Last working build: `builds/BattleRoyale_Beta_v0.1.1.gba`
 - Next: Drew plays the beta; fix what he finds; tune Tiers 3–9.
 - Known issues and the "never tested" list: `HANDOFF_OPUS.md` sections 7 and 8.
 
@@ -27,3 +27,4 @@ See `HANDOFF_OPUS.md` section 5 for the file map and persistent state.
 - Phase 4: Tier 2 (lv 14–23, evolved Pokémon, teams of 2–4; wins ₽600/800/1000/1200/1500, bonus ₽4000, loss ₽500), tier menu with Tier 2 locked until Tier 1 is cleared, level cap, practice grass, 3 starters, Drew's NPC quotes. Tested with a boosted team: Tier 1 clear → Tier 2 clear, money and progress correct; level stalls at 15 in the grass.
 - Phase 5: save and quit between battles, resume or abandon from the lobby. Full run-through tested over three emulator sessions with a boosted team: Tier 1 battle 1 → save → reload → clear Tier 1 → Tier 2 two battles → save → reload → clear Tier 2. Final money ₽15600 as expected.
 - Beta v0.1: Tiers 3–8 and Champion tier, bosses, loss fees, bankruptcy game over, obedience by tier, legendary ban, link-battle gate, scaling shop and wild levels, staged Mart stock, cheat menu. Tested: all nine tiers cleared in order with a boosted team (final money ₽365000), tier lock, loss fee, both game-over paths, grass blackout, shop scaling, rare clerk, cheat menu, save/quit/resume.
+- Beta v0.1.1 (Drew's feedback): BALLS cheat on the Skitty menu, running from wild battles always works, starting grass levels lowered to 3–8. Tested: BALLS gives the items, RUN shows "Got away safely!".

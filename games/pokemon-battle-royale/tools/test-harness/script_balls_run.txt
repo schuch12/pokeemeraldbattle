@@ -1,0 +1,113 @@
+run 600
+press A
+run 300
+press START
+run 300
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press A
+run 80
+press START
+run 60
+press A
+run 600
+mash B 5 80
+opts
+walk DOWN 15
+walk RIGHT 5
+walk DOWN 9
+walk LEFT 5
+walk DOWN 10
+walk LEFT 13
+walk UP 1
+run 200
+walk UP 4
+walk LEFT 6
+press UP 2
+press A
+run 200
+press A
+run 200
+press A
+run 100
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+press DOWN
+shot s1.ppm
+press A
+run 300
+shot s2.ppm
+mash A 6 150
+shot s3.ppm
+mash B 4 80
+walk RIGHT 6
+walk DOWN 5
+run 200
+pos
+walk RIGHT 13
+walk UP 1
+walk RIGHT 6
+walk DOWN 2
+pos
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+walk DOWN 2
+walk UP 2
+mash B 12 60
+shot s4.ppm
+press RIGHT
+press DOWN
+shot s5.ppm
+press A
+run 120
+shot s6.ppm
+mash B 4 80
+run 200
+pos
+shot s7.ppm

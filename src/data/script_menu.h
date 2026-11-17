@@ -830,6 +830,7 @@ static const u8 sText_BRCheatAllTiers[] = _("ALL TIERS OPEN ON/OFF");
 static const u8 sText_BRCheatFastExp[] = _("EXP ×4 ON/OFF");
 static const u8 sText_BRCheatMoney[] = _("GET ¥100000");
 static const u8 sText_BRCheatCandy[] = _("GET 10 RARE CANDIES");
+static const u8 sText_BRCheatBalls[] = _("BALLS");
 static const u8 sText_BRCheatHeal[] = _("HEAL PARTY");
 
 static const struct MenuAction MultichoiceList_BRCheats[] =
@@ -839,6 +840,7 @@ static const struct MenuAction MultichoiceList_BRCheats[] =
     {sText_BRCheatFastExp},
     {sText_BRCheatMoney},
     {sText_BRCheatCandy},
+    {sText_BRCheatBalls},
     {sText_BRCheatHeal},
     {gText_Exit},
 };

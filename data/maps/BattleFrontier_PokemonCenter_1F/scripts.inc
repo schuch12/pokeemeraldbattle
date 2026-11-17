@@ -49,7 +49,8 @@ BattleRoyale_Cheats_EventScript_Menu::
 	case 2, BattleRoyale_Cheats_EventScript_FastExp
 	case 3, BattleRoyale_Cheats_EventScript_Money
 	case 4, BattleRoyale_Cheats_EventScript_Candy
-	case 5, BattleRoyale_Cheats_EventScript_Heal
+	case 5, BattleRoyale_Cheats_EventScript_Balls
+	case 6, BattleRoyale_Cheats_EventScript_Heal
 	release
 	end
 
@@ -94,6 +95,12 @@ BattleRoyale_Cheats_EventScript_Money::
 
 BattleRoyale_Cheats_EventScript_Candy::
 	giveitem ITEM_RARE_CANDY, 10
+	goto BattleRoyale_Cheats_EventScript_Menu
+
+BattleRoyale_Cheats_EventScript_Balls::
+	giveitem ITEM_MASTER_BALL, 5
+	giveitem ITEM_ULTRA_BALL, 5
+	giveitem ITEM_GREAT_BALL, 5
 	goto BattleRoyale_Cheats_EventScript_Menu
 
 BattleRoyale_Cheats_EventScript_Heal::
